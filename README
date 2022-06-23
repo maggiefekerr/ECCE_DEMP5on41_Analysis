@@ -37,7 +37,7 @@ make install
 
 4) Copying in the latest version of the respository and then rebuilding your directory
 Within ~/workECCE_DEMP5on41/build directory:
-cp /home/fun4all/work/ECCE_DEMP_Analysis/ECCE_DEMP5on41_Ana/ECCE_DEMP5on41.* ../
+cp /home/fun4all/work/ECCE_DEMP5on41_Analysis/ECCE_DEMP5on41_Ana/ECCE_DEMP5on41.* ../
 make install
 
 5) Whenever you are rebuilding your plugin (it is recommended to make changes to G4_User.C and Fun4all_reana.C within your ECCE_DEMP5on41_Analysis repository):
