@@ -345,62 +345,27 @@ int ECCE_DEMP5on41::Init(PHCompositeNode *topNode)
   h2_t_Q2 = new TH2F("t_Q2", "t vs Q^{2}; t; Q^{2}", 100, 0, 10, 200, 0, 50);
   h2_delta_t_t = new TH2F("delta_t_t", "#Delta t vs t; #Delta t (%); t", 200, -100, 100, 100, 0, 1);
   
-  for(Int_t A = 0; A < 6; A++){
+  for(Int_t A = 0; A < 19; A++){
  
     h1_t_Q2[A] = new TH1F(Form("t_Q2_%i", (A+1)), Form("t dist, %2.1f < Q^{2} < %2.1f; t", Q2BinVal[A], Q2BinVal[A+1]), 100, 0, 10);
     h1_t_alt_Q2[A] = new TH1F(Form("t_alt_Q2_%i", (A+1)), Form("t (Alternative calculation) dist, %2.1f < Q^{2} < %2.1f; t", Q2BinVal[A], Q2BinVal[A+1]), 100, 0, 10);
     h2_delta_t_t_Q2[A] = new TH2F(Form("delta_t_t_Q2_%i", (A+1)), Form("#Delta t vs t, %2.1f < Q^{2} < %2.1f; #Delta t (Percent); t", Q2BinVal[A], Q2BinVal[A+1]), 200, -100, 100, 100, 0, 1); // mfek 06/02/2022 - new binning
-
-    /*if (A <= 6) {
-       h1_t_Q2[A] = new TH1F(Form("t_Q2_%i", (A+1)), Form("t dist, %2.1f < Q^{2} < %2.1f; t", (2.5 + (A*2.5)), 5+(A*2.5)), 100, 0, 10);
-       h1_t_alt_Q2[A] = new TH1F(Form("t_alt_Q2_%i", (A+1)), Form("t (Alternative calculation) dist, %2.1f < Q^{2} < %2.1f; t", (2.5 + (A*2.5)), 7.5+(A*2.5)), 100, 0, 10);
-       h2_delta_t_t_Q2[A] = new TH2F(Form("delta_t_t_Q2_%i", (A+1)), Form("#Delta t vs t, %2.1f < Q^{2} < %2.1f; #Delta t (Percent); t", (2.5 + (A*2.5)), 7.5+(A*2.5)), 200, -100, 100, 100, 0, 1);
-     }
-    else if (A == 7) {
-       h1_t_Q2[A] = new TH1F(Form("t_Q2_%i", (A+1)), Form("t dist, %2.1f < Q^{2} < %2.1f; t", (2.5 + (A*2.5)), 5+(A*2.5)), 100, 0, 10);
-       h1_t_alt_Q2[A] = new TH1F(Form("t_alt_Q2_%i", (A+1)), Form("t (Alternative calculation) dist, %2.1f < Q^{2} < %2.1f; t", (2.5 + (A*2.5)), 7.5+(A*2.5)), 100, 0, 10);
-       h2_delta_t_t_Q2[A] = new TH2F(Form("delta_t_t_Q2_%i", (A+1)), Form("#Delta t vs t, %2.1f < Q^{2} < %2.1f; #Delta t (Percent); t", (2.5 + (A*2.5)), 7.5+(A*2.5)), 200, -100, 100, 100, 0, 1);
-     }
-     else {
-       h1_t_Q2[A] = new TH1F(Form("t_Q2_%i", (A+1)), Form("t dist, %2.1f < Q^{2} < %2.1f; t", (2.5 + ((A+1)*2.5)), 5+((A+1)*2.5)), 100, 0, 10);
-       h1_t_alt_Q2[A] = new TH1F(Form("t_alt_Q2_%i", (A+1)), Form("t (Alternative calculation) dist, %2.1f < Q^{2} < %2.1f; t", (2.5 + ((A+1)*2.5)), 7.5+((A+1)*2.5)), 100, 0, 10);
-       h2_delta_t_t_Q2[A] = new TH2F(Form("delta_t_t_Q2_%i", (A+1)), Form("#Delta t vs t, %2.1f < Q^{2} < %2.1f; #Delta t (Percent); t", (2.5 + ((A+1)*2.5)), 7.5+((A+1)*2.5)), 200, -100, 100, 100, 0, 1);
-     }*/
-  } // mfek 05/26/2022 - changed binning for 5 on 41
+  } // mfek 06/21/2022 - changed Q2 binning
   gDirectory->cd("../");
 
   gDirectory->mkdir("Physics_Results_Cuts");
   gDirectory->cd("Physics_Results_Cuts");
-  for(Int_t A = 0; A < 6; A++){
+  for(Int_t A = 0; A < 19; A++){
     h1_t_result[A] = new TH1F(Form("t_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f; -t", Q2BinVal[A], Q2BinVal[A+1]), 10, 0, 0.4);
     h1_nTheta_result[A] = new TH1F(Form("nTheta_Result_Q2_%i", (A+1)), Form("#theta_{n} Dist, %2.1f < Q^{2} < %2.1f", Q2BinVal[A], Q2BinVal[A+1]), 500, 0, 5);
     h1_pmiss_result[A] = new TH1F(Form("pmiss_Result_Q2_%i", (A+1)), Form("p_{miss} Dist, %2.1f < Q^{2} < %2.1f", Q2BinVal[A], Q2BinVal[A+1]), 240, 0, 50) ;
     h1_pn_result[A] = new TH1F(Form("pn_Result_Q2_%i", (A+1)), Form("p_{n} Dist, %2.1f < Q^{2} < %2.1f", Q2BinVal[A], Q2BinVal[A+1]), 240, 0, 50) ; //mfek 06/02/2022 - new binning
-     
-    /*if ( A <= 6){
-      h1_t_result[A] = new TH1F(Form("t_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f; -t", (2.5+(A*2.5)), (5+(A*2.5))), 10, 0, 0.4);
-      h1_nTheta_result[A] = new TH1F(Form("nTheta_Result_Q2_%i", (A+1)), Form("#theta_{n} Dist, %2.1f < Q^{2} < %2.1f", (2.5+(A*2.5)), (5+(A*2.5))), 500, 0, 5);
-      h1_pmiss_result[A] = new TH1F(Form("pmiss_Result_Q2_%i", (A+1)), Form("p_{miss} Dist, %2.1f < Q^{2} < %2.1f", (2.5+(A*2.5)), (5+(A*2.5))), 240, 0, 50) ;
-      h1_pn_result[A] = new TH1F(Form("pn_Result_Q2_%i", (A+1)), Form("p_{n} Dist, %2.1f < Q^{2} < %2.1f", (2.5+(A*2.5)), (5+(A*2.5))), 240, 0, 50) ;
-    }
-    else if ( A == 7){
-      h1_t_result[A] = new TH1F(Form("t_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f; -t", (2.5+(A*2.5)), (7.5+(A*2.5))), 10, 0, 0.4);
-      h1_nTheta_result[A] = new TH1F(Form("nTheta_Result_Q2_%i", (A+1)), Form("#theta_{n} Dist, %2.1f < Q^{2} < %2.1f", (2.5+(A*2.5)), (7.5+(A*2.5))), 500, 0, 5);
-      h1_pmiss_result[A] = new TH1F(Form("pmiss_Result_Q2_%i", (A+1)), Form("p_{miss} Dist, %2.1f < Q^{2} < %2.1f", (2.5+(A*2.5)), (7.5+(A*2.5))), 240, 0, 50) ;
-      h1_pn_result[A] = new TH1F(Form("pn_Result_Q2_%i", (A+1)), Form("p_{n} Dist, %2.1f < Q^{2} < %2.1f", (2.5+(A*2.5)), (7.5+(A*2.5))), 240, 0, 50) ;
-    }
-    else{
-      h1_t_result[A] = new TH1F(Form("t_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f; -t", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 10, 0, 0.4);
-      h1_nTheta_result[A] = new TH1F(Form("nTheta_Result_Q2_%i", (A+1)), Form("#theta_{n} Dist, %2.1f < Q^{2} < %2.1f", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 500, 0, 5);
-      h1_pmiss_result[A] = new TH1F(Form("pmiss_Result_Q2_%i", (A+1)), Form("p_{miss} Dist, %2.1f < Q^{2} < %2.1f", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 240, 0, 50) ;
-      h1_pn_result[A] = new TH1F(Form("pn_Result_Q2_%i", (A+1)), Form("p_{n} Dist, %2.1f < Q^{2} < %2.1f", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 240, 0, 50) ;
-    }*/
-  }// mfek 05/26/2022 - changed binning for 5 on 41
+  }// mfek 06/21/2022 - changed binning for 5 on 41
   gDirectory->cd("../");
 
   gDirectory->mkdir("Physics_Results");
   gDirectory->cd("Physics_Results");
-  for(Int_t A = 0; A < 6; A++){
+  for(Int_t A = 0; A < 19; A++){
     h1_t_cut_result[A] = new TH1F(Form("t_cut_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t (GeV^{2}); Rate(Hz)", Q2BinVal[A], Q2BinVal[A+1]), 10, 0, 0.4);
     h1_t_truth_thrown_result[A] = new TH1F(Form("t_truth_thrown_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f; -t", Q2BinVal[A], Q2BinVal[A+1]), 10, 0, 0.4);
     h1_Q2_cut_result[A] = new TH1F(Form("Q2_cut_Result_Q2_%i", (A+1)), Form("Q^{2} Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; Q^{2}(GeV^{2}); Rate(Hz)", Q2BinVal[A], Q2BinVal[A+1]), 25, Q2BinVal[A], Q2BinVal[A+1]);
@@ -408,35 +373,7 @@ int ECCE_DEMP5on41::Init(PHCompositeNode *topNode)
     h2_Q2_t_result[A] = new TH2F(Form("Q2_t_cut_Result_Q2_%i", (A+1)), Form("Q^{2} vs -t Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; Q^{2}(GeV^{2}); -t (GeV^{2})", Q2BinVal[A], Q2BinVal[A+1]), 25, Q2BinVal[A], Q2BinVal[A+1], 10, 0, 0.4);
     h2_t_ttruth_result_Q2[A] = new TH2F(Form("t_ttruth_Result_Q2_%i",(A+1)), Form("-t vs -t_{truth}, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t (GeV^{2}); -t_{truth}(GeV^{2})",Q2BinVal[A], Q2BinVal[A+1]), 50, 0, 10, 50, 0, 0.5); 
     h2_t_alt_ttruth_result_Q2[A] = new TH2F(Form("t_alt_ttruth_Result_Q2_%i",(A+1)), Form("-t_{alt} vs -t_{truth}, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t_{alt} (GeV^{2}); -t_{truth}(GeV^{2})", Q2BinVal[A], Q2BinVal[A+1]), 50, 0, 0.5, 50, 0, 0.5); // mfek 06/02/2022 - new binning
-    
-    /*if ( A <= 6){
-      h1_t_cut_result[A] = new TH1F(Form("t_cut_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t (GeV^{2}); Rate(Hz)", (2.5+(A*2.5)), (5+(A*2.5))), 10, 0, 0.4);
-      h1_t_truth_thrown_result[A] = new TH1F(Form("t_truth_thrown_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f; -t", (2.5+(A*2.5)), (5+(A*2.5))), 10, 0, 0.4);
-      h1_Q2_cut_result[A] = new TH1F(Form("Q2_cut_Result_Q2_%i", (A+1)), Form("Q^{2} Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; Q^{2}(GeV^{2}); Rate(Hz)", (2.5+(A*2.5)), (5+(A*2.5))), 25, (5+(A*2.5)), (7.5+(A*2.5)));
-      h1_W_cut_result[A] = new TH1F(Form("W_cut_Result_Q2_%i", (A+1)), Form("W Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; W(GeV); Rate(Hz)", (2.5+(A*2.5)), (5+(A*2.5))), 60, 0, 30);
-      h2_Q2_t_result[A] = new TH2F(Form("Q2_t_cut_Result_Q2_%i", (A+1)), Form("Q^{2} vs -t Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; Q^{2}(GeV^{2}); -t (GeV^{2})", (2.5+(A*2.5)), (5+(A*2.5))), 25, (2.5+(A*2.5)), (5+(A*2.5)), 10, 0, 0.4);
-      h2_t_ttruth_result_Q2[A] = new TH2F(Form("t_ttruth_Result_Q2_%i",(A+1)), Form("-t vs -t_{truth}, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t (GeV^{2}); -t_{truth}(GeV^{2})",(2.5+(A*2.5)), (5+(A*2.5))), 50, 0, 10, 50, 0, 0.5); 
-      h2_t_alt_ttruth_result_Q2[A] = new TH2F(Form("t_alt_ttruth_Result_Q2_%i",(A+1)), Form("-t_{alt} vs -t_{truth}, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t_{alt} (GeV^{2}); -t_{truth}(GeV^{2})",(2.5+(A*2.5)), (5+(A*2.5))), 50, 0, 0.5, 50, 0, 0.5); 
-    }
-    else if ( A == 7){
-      h1_t_cut_result[A] = new TH1F(Form("t_cut_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t (GeV^{2}); Rate(Hz)", (2.5+(A*2.5)), (7.5+(A*2.5))), 10, 0, 0.4);
-      h1_t_truth_thrown_result[A] = new TH1F(Form("t_truth_thrown_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f; -t", (2.5+(A*2.5)), (7.5+(A*2.5))), 10, 0, 0.4);
-      h1_Q2_cut_result[A] = new TH1F(Form("Q2_cut_Result_Q2_%i", (A+1)), Form("Q^{2} Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; Q^{2}(GeV^{2}); Rate(Hz)", (2.5+(A*2.5)), (7.5+(A*2.5))), 25, (5+(A*2.5)), (7.5+(A*2.5)));
-      h1_W_cut_result[A] = new TH1F(Form("W_cut_Result_Q2_%i", (A+1)), Form("W Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; W(GeV); Rate(Hz)", (2.5+(A*2.5)), (7.5+(A*2.5))), 60, 0, 30);
-      h2_Q2_t_result[A] = new TH2F(Form("Q2_t_cut_Result_Q2_%i", (A+1)), Form("Q^{2} vs -t Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; Q^{2}(GeV^{2}); -t (GeV^{2})", (2.5+(A*2.5)), (7.5+(A*2.5))), 25, (5+(A*2.5)), (7.5+(A*2.5)), 10, 0, 0.4);
-      h2_t_ttruth_result_Q2[A] = new TH2F(Form("t_ttruth_Result_Q2_%i",(A+1)), Form("-t vs -t_{truth}, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t (GeV^{2}); -t_{truth}(GeV^{2})",(2.5+(A*2.5)), (7.5+(A*2.5))), 50, 0, 10, 50, 0, 0.5); 
-      h2_t_alt_ttruth_result_Q2[A] = new TH2F(Form("t_alt_ttruth_Result_Q2_%i",(A+1)), Form("-t_{alt} vs -t_{truth}, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t_{alt} (GeV^{2}); -t_{truth}(GeV^{2})",(2.5+(A*2.5)), (7.5+(A*2.5))), 50, 0, 0.5, 50, 0, 0.5); 
-    }
-    else{
-      h1_t_cut_result[A] = new TH1F(Form("t_cut_Result_Q2_%i", (A+1)), Form("-t Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t (GeV^{2}); Rate(Hz)", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 10, 0, 0.4);
-      h1_t_truth_thrown_result[A] = new TH1F(Form("t_truth_thrown_Result_Q2_%i", (A+1)), Form("-t_{truth} Dist, %2.1f < Q^{2} < %2.1f; -t", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 10, 0, 0.4);
-      h1_Q2_cut_result[A] = new TH1F(Form("Q2_cut_Result_Q2_%i", (A+1)), Form("Q^{2} Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; Q^{2}(GeV^{2}); Rate(Hz)", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 50, (5+((A-1)*5)), (10+((A-1)*5)));
-      h1_W_cut_result[A] = new TH1F(Form("W_cut_Result_Q2_%i", (A+1)), Form("W Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; W(GeV); Rate(Hz)", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 60, 0, 30);
-      h2_Q2_t_result[A] = new TH2F(Form("Q2_t_cut_Result_Q2_%i", (A+1)), Form("Q^{2} vs -t Dist, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; Q^{2}(GeV^{2}); -t (GeV^{2})", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 50, (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5)), 10, 0, 0.4);
-      h2_t_ttruth_result_Q2[A] = new TH2F(Form("t_ttruth_Result_Q2_%i",(A+1)), Form("-t vs -t_{truth}, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t (GeV^{2}); -t_{truth}(GeV^{2})",(2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 50, 0, 10, 50, 0, 0.5); 
-      h2_t_alt_ttruth_result_Q2[A] = new TH2F(Form("t_alt_ttruth_Result_Q2_%i",(A+1)), Form("-t_{alt} vs -t_{truth}, %2.1f < Q^{2} < %2.1f, with p_{miss}, #theta_{n} cuts; -t_{alt} (GeV^{2}); -t_{truth}(GeV^{2})",(2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 50, 0, 0.5, 50, 0, 0.5);
-    } */
-  } // mfek 05/26/2022 - changed binning for 5 on 41
+  } // mfek 06/21/2022 - changed binning for 5 on 41
 
   gDirectory->cd("../");
   gDirectory->mkdir("Physics_Results_Misc");
@@ -474,28 +411,12 @@ h1_t_cut4_High = new TH1F("t_result_cut4_High", "t dist 15.0 < Q^{2} < 20.0,  t 
   gDirectory->cd("../");
   gDirectory->mkdir("t_Resolution");
   gDirectory->cd("t_Resolution");
-  for(Int_t A = 0; A < 6; A++){
+  for(Int_t A = 0; A < 19; A++){
     
     h1_t_Resolution[A]=new TH1F(Form("t_Resolution_Q2_%i", (A+1)), Form("t - t_{truth} Dist, %2.1f < Q^{2} < %2.1f;  t - t_{truth} (GeV^{2}); Rate(Hz)", Q2BinVal[A], Q2BinVal[A+1]), 150, -5.5, 0.5);
     h1_talt_Resolution_ZDC[A]=new TH1F(Form("talt_Resolution_ZDC_Q2_%i", (A+1)), Form("t_{alt} - t_{truth} Dist, %2.1f < Q^{2} < %2.1f, ZDC Info Only;  t_{alt} - t_{truth} (GeV^{2}); Rate(Hz)", Q2BinVal[A], Q2BinVal[A+1]), 25, -0.5, 0.5);
     h1_talt_Resolution_pMiss[A]=new TH1F(Form("talt_Resolution_pMiss_Q2_%i", (A+1)), Form("t_{alt} - t_{truth} Dist, %2.1f < Q^{2} < %2.1f, Corrected p_{Miss};  t_{alt} - t_{truth} (GeV^{2}); Rate(Hz)", Q2BinVal[A], Q2BinVal[A+1]), 25, -0.5, 0.5); // mfek 06/02/2022 - new binning
-
-    /*if ( A <= 6){
-      h1_t_Resolution[A]=new TH1F(Form("t_Resolution_Q2_%i", (A+1)), Form("t - t_{truth} Dist, %2.1f < Q^{2} < %2.1f;  t - t_{truth} (GeV^{2}); Rate(Hz)", (2.5+(A*2.5)), (5+(A*2.5))), 150, -5.5, 0.5);
-      h1_talt_Resolution_ZDC[A]=new TH1F(Form("talt_Resolution_ZDC_Q2_%i", (A+1)), Form("t_{alt} - t_{truth} Dist, %2.1f < Q^{2} < %2.1f, ZDC Info Only;  t_{alt} - t_{truth} (GeV^{2}); Rate(Hz)", (2.5+(A*2.5)), (5+(A*2.5))), 25, -0.5, 0.5);
-      h1_talt_Resolution_pMiss[A]=new TH1F(Form("talt_Resolution_pMiss_Q2_%i", (A+1)), Form("t_{alt} - t_{truth} Dist, %2.1f < Q^{2} < %2.1f, Corrected p_{Miss};  t_{alt} - t_{truth} (GeV^{2}); Rate(Hz)", (2.5+(A*2.5)), (5+(A*2.5))), 25, -0.5, 0.5);
-    }
-    else if ( A <= 7){
-      h1_t_Resolution[A]=new TH1F(Form("t_Resolution_Q2_%i", (A+1)), Form("t - t_{truth} Dist, %2.1f < Q^{2} < %2.1f;  t - t_{truth} (GeV^{2}); Rate(Hz)", (2.5+(A*2.5)), (7.5+(A*2.5))), 150, -5.5, 0.5);
-      h1_talt_Resolution_ZDC[A]=new TH1F(Form("talt_Resolution_ZDC_Q2_%i", (A+1)), Form("t_{alt} - t_{truth} Dist, %2.1f < Q^{2} < %2.1f, ZDC Info Only;  t_{alt} - t_{truth} (GeV^{2}); Rate(Hz)", (2.5+(A*2.5)), (7.5+(A*2.5))), 25, -0.5, 0.5);
-      h1_talt_Resolution_pMiss[A]=new TH1F(Form("talt_Resolution_pMiss_Q2_%i", (A+1)), Form("t_{alt} - t_{truth} Dist, %2.1f < Q^{2} < %2.1f, Corrected p_{Miss};  t_{alt} - t_{truth} (GeV^{2}); Rate(Hz)", (2.5+(A*2.5)), (7.5+(A*2.5))), 25, -0.5, 0.5);
-    }
-    else{
-      h1_t_Resolution[A]=new TH1F(Form("t_Resolution_Q2_%i", (A+1)), Form("t - t_{truth} Dist, %2.1f < Q^{2} < %2.1f;  t - t_{truth} (GeV^{2}); Rate(Hz)", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 150, -5.5, 0.5);
-      h1_talt_Resolution_ZDC[A]=new TH1F(Form("talt_Resolution_ZDC_Q2_%i", (A+1)), Form("t_{alt} - t_{truth} Dist, %2.1f < Q^{2} < %2.1f, ZDC Info Only;  t_{alt} - t_{truth} (GeV^{2}); Rate(Hz)", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 25, -0.5, 0.5);
-      h1_talt_Resolution_pMiss[A]=new TH1F(Form("talt_Resolution_pMiss_Q2_%i", (A+1)), Form("t_{alt} - t_{truth} Dist, %2.1f < Q^{2} < %2.1f, Corrected p_{Miss};  t_{alt} - t_{truth} (GeV^{2}); Rate(Hz)", (2.5+((A+1)*2.5)), (7.5+((A+1)*2.5))), 25, -0.5, 0.5);
-    } */
-  } // mfek 05/26/2022 - changed binning for 5 on 41
+  } // mfek 06/21/2022 - changed binning for 5 on 41
 
   gDirectory->cd("../");
   gDirectory->mkdir("pi_e_n_preCut_Truth_Dist"); // mfek 05/27/2022 - new directory for precut truth values
@@ -748,31 +669,13 @@ int ECCE_DEMP5on41::process_event(PHCompositeNode *topNode)
   h2_Q2_t_DetEff_Uncut->Fill(Q2_truth, t_truth, wgt);
   h2_Q2_t_DetEff_v2_Uncut->Fill(Q2_truth, t_truth, wgt);
 
-  /*for(Int_t B = 0; B < 9; B++){
-    if ( B <= 6){
-      Q2_low = 2.5+(B*2.5);
-      Q2_high = 5+(B*2.5);
-    }
-    else if ( B == 7){
-      Q2_low = 2.5+(B*2.5);
-      Q2_high = 7.5+(B*2.5);
-    }
-    else{
-      Q2_low = 2.5+((B+1)*2.5);
-      Q2_high = 7.5+((B+1)*2.5);
-    } // mfek 05/26/2022 - changed binning for 5 on 41
-    if ( Q2_truth > Q2_low && Q2_truth < Q2_high){
-    h1_t_truth_thrown_result[B]->Fill(t_truth, wgt);
-    }
-  } */
-
-  for(Int_t B = 0; B < 6; B++){
+  for(Int_t B = 0; B < 19; B++){
     Q2_low = Q2BinVal[B];
     Q2_high = Q2BinVal[B+1];
     if ( Q2_truth > Q2_low && Q2_truth < Q2_high){
       h1_t_truth_thrown_result[B]->Fill(t_truth, wgt);
     }
-  } // mfek 06/02/2022 - new binning
+  } // mfek 06/21/2022 - new binning
 
   if (Check_n(topNode) == true) {
     count_aftern++;
@@ -1034,38 +937,8 @@ int ECCE_DEMP5on41::process_event(PHCompositeNode *topNode)
     h2_t_ep->Fill(t, e4Vect.P(), wgt);
     h2_t_Q2->Fill(t,Q2, wgt);
     h2_delta_t_t->Fill(((t - t_truth)/t_truth)*100, t, wgt);
-    
-    /*for(Int_t B = 0; B < 9; B++){
-      if (B <= 6) {
-	Q2_low = 2.5+(B*2.5);
-        Q2_high = 5+(B*2.5);
-        if ( Q2_truth > Q2_low && Q2_truth < Q2_high){
-	  h1_t_Q2[B]->Fill(t, wgt);
-	  h1_t_alt_Q2[B]->Fill(t_alt, wgt);
-	  h2_delta_t_t_Q2[B]->Fill(((t - t_truth)/t_truth)*100, t, wgt);
-	}
-      }
-      if (B == 7) {
-	Q2_low = 2.5+(B*2.5);
-        Q2_high = 7.5+(B*2.5);
-        if ( Q2_truth > Q2_low && Q2_truth < Q2_high){
-	  h1_t_Q2[B]->Fill(t, wgt);
-	  h1_t_alt_Q2[B]->Fill(t_alt, wgt);
-	  h2_delta_t_t_Q2[B]->Fill(((t - t_truth)/t_truth)*100, t, wgt);
-	}
-      }
-      else {
-	Q2_low = 2.5+((B+1)*5);
-        Q2_high = 7.5+((B+1)*5);
-        if ( Q2_truth > Q2_low && Q2_truth < Q2_high){
-	  h1_t_Q2[B]->Fill(t, wgt);
-	  h1_t_alt_Q2[B]->Fill(t_alt, wgt);
-	  h2_delta_t_t_Q2[B]->Fill(((t - t_truth)/t_truth)*100, t, wgt);
-         }
-      }
-    } // mfek 05/26/2022 - changed binning for 5 on 41 */
 
-    for(Int_t B = 0; B < 6; B++){
+    for(Int_t B = 0; B < 19; B++){
       Q2_low = Q2BinVal[B];
       Q2_high = Q2BinVal[B+1];
       if ( Q2_truth > Q2_low && Q2_truth < Q2_high){
@@ -1073,26 +946,12 @@ int ECCE_DEMP5on41::process_event(PHCompositeNode *topNode)
 	  h1_t_alt_Q2[B]->Fill(t_alt, wgt);
 	  h2_delta_t_t_Q2[B]->Fill(((t - t_truth)/t_truth)*100, t, wgt);
       }
-    } // mfek 06/02/2022 - changed binning for 5 on 41
+    } // mfek 06/21/2022 - changed binning for 5 on 41
 
-    for(Int_t B = 0; B < 6; B++){
-
-
-    /*if ( B <= 6){
-      Q2_low = 2.5+(B*2.5);
-      Q2_high = 5+(B*2.5);
-    }
-    else if ( B == 7){
-      Q2_low = 2.5+(B*2.5);
-      Q2_high = 7.5+(B*2.5);
-    }
-    else{
-      Q2_low = 2.5+((B+1)*2.5);
-      Q2_high = 7.5+((B+1)*2.5);
-    } // mfek 05/26/2022 - changed binning for 5 on 41*/
+    for(Int_t B = 0; B < 19; B++){
       
       Q2_low = Q2BinVal[B];
-      Q2_high = Q2BinVal[B+1]; // mfek 06/02/2022 - new binning
+      Q2_high = Q2BinVal[B+1]; // mfek 06/21/2022 - new binning
 
       // Fill some histograms under different cut conditions for comparison
       // These are used for some plots Garth wanted
@@ -1399,7 +1258,7 @@ int ECCE_DEMP5on41::End(PHCompositeNode *topNode)
   h1_pmissDiff_py->Scale((1/ScalingFact));
   h1_pmissDiff_pz->Scale((1/ScalingFact));
 
-  for(Int_t C = 0; C < 6; C++){
+  for(Int_t C = 0; C < 19; C++){
     h1_pmiss_result[C]->Scale((1/ScalingFact));
     h1_pn_result[C]->Scale((1/ScalingFact));	
     h1_t_result[C]->Scale((1/ScalingFact));
@@ -1434,13 +1293,11 @@ int ECCE_DEMP5on41::End(PHCompositeNode *topNode)
   h1_piTruth_preCut_pz->Scale((1/ScalingFact));
   h1_piTruth_preCut_p->Scale((1/ScalingFact));
   h1_piTruth_preCut_E->Scale((1/ScalingFact));
-
   h1_eTruth_preCut_px->Scale((1/ScalingFact));
   h1_eTruth_preCut_py->Scale((1/ScalingFact));
   h1_eTruth_preCut_pz->Scale((1/ScalingFact));
   h1_eTruth_preCut_p->Scale((1/ScalingFact));
   h1_eTruth_preCut_E->Scale((1/ScalingFact));
-
   h1_nTruth_preCut_px->Scale((1/ScalingFact));
   h1_nTruth_preCut_py->Scale((1/ScalingFact));
   h1_nTruth_preCut_pz->Scale((1/ScalingFact));
@@ -1451,7 +1308,6 @@ int ECCE_DEMP5on41::End(PHCompositeNode *topNode)
   h2_nTruth_preCut_XY_inZDC->Scale((1/ScalingFact));
   h2_nTruth_preCut_XY_outZDC->Scale((1/ScalingFact));
   h2_nTruth_XY_hits->Scale((1/ScalingFact));
-
   nTruth_xyE3D->Scale((1/ScalingFact));*/  
   ZDC_xyE3D->Scale((1/ScalingFact));
 
@@ -1463,7 +1319,6 @@ int ECCE_DEMP5on41::End(PHCompositeNode *topNode)
   h1_piTruth_Missed_E->Scale((1/ScalingFact));
   h1_piTruth_Missed_Theta->Scale((1/ScalingFact));
   h1_piTruth_Missed_Phi->Scale((1/ScalingFact));
-
   h1_eTruth_Missed_p->Scale((1/ScalingFact));
   h1_eTruth_Missed_px->Scale((1/ScalingFact));
   h1_eTruth_Missed_py->Scale((1/ScalingFact));
@@ -1471,7 +1326,6 @@ int ECCE_DEMP5on41::End(PHCompositeNode *topNode)
   h1_eTruth_Missed_E->Scale((1/ScalingFact));
   h1_eTruth_Missed_Theta->Scale((1/ScalingFact));
   h1_eTruth_Missed_Phi->Scale((1/ScalingFact));
-
   h1_nTruth_Missed_p->Scale((1/ScalingFact));
   h1_nTruth_Missed_px->Scale((1/ScalingFact));
   h1_nTruth_Missed_py->Scale((1/ScalingFact));
@@ -1479,7 +1333,6 @@ int ECCE_DEMP5on41::End(PHCompositeNode *topNode)
   h1_nTruth_Missed_E->Scale((1/ScalingFact));
   h1_nTruth_Missed_Theta->Scale((1/ScalingFact));
   h1_nTruth_Missed_Phi->Scale((1/ScalingFact));
-
   h2_nTruth_Missed_XY->Scale((1/ScalingFact));*/
 
   c = new TCanvas();
@@ -1719,4 +1572,3 @@ float ECCE_DEMP5on41::Get_Local_X(float global_x, float global_y, float global_z
    return local_x1;
 
 }
-
